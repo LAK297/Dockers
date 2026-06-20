@@ -1,0 +1,24 @@
+FROM node:24
+
+#chi dinh thu muc lam viec chinh sau khi build image va start container
+WORKDIR /frontend_nextjs
+
+#copy file package.json tai source local host vao thu muc lam viec frontend_nextjs tren container.
+COPY package.json .
+
+RUN yarn config set network-timeout 3000000
+
+#thuc hien cai thu vien cho NodeJS tu file package.json
+RUN yarn install
+
+#copy toan bo file, thu muc tai may local hien tai sang thu muc lam viec /frontend_nextjs
+COPY . .
+
+#thuc hien dong goi toan bo source va dua vao chung folder next
+RUN yarn run build
+
+#thuc hien khoi dong chay server len
+CMD [ "yarn","start" ]
+
+#chi dinh port goc cua ung dung chay chinh, lenh nay la tuy chon khong bat buoc.
+EXPOSE 3000

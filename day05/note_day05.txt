@@ -1,0 +1,4 @@
+docker run -d --name mongo-db -p 27017:27017 -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=admin123 -v mongodb_data:/data/db --restart unless-stopped mongo
+
+===== Ket noi den mongodb bằng tool ======
+mongodb://admin:admin123@localhost:27017/

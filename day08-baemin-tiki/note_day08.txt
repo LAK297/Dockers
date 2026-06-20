@@ -1,0 +1,20 @@
+ssh-keygen -t rsa -b 4096 -C "demo@gmail.com"
+
+========= Lệnh cài Docker - Docker Compose ========
+apt install docker.io
+
+curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+
+chmod 700 /usr/local/bin/docker-compose
+
+
+==================== copy file từ máy local lên máy vps ============
+scp -r .\landing_page\ root@188.166.235.96:/root/my-html2
+
+==> tham số -r : cho phép copy toàn bộ folder "landing_page" lên vps và lưu tại /root/my-html2
+
+
+
+docker run -d --name mongodb -p 27017:27017 -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=admin123 -v mongodb_data:/data/db --restart unless-stopped mongo
+
+http://146.190.101.102:8088/api/products

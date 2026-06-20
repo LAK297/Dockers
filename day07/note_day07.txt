@@ -1,0 +1,64 @@
+https://l.facebook.com/l.php?u=https%3A%2F%2Fdrive.google.com%2Fdrive%2Ffolders%2F1CHWOmEZNONm4kMPavYC_JORGS4OpU7tU%3Fusp%3Dsharing%26fbclid%3DIwZXh0bgNhZW0CMTAAYnJpZBExZGp1UlpleWFzNXJPeWdVWnNydGMGYXBwX2lkEDIyMjAzOTE3ODgyMDA4OTIAAR5Ed_wxWBLI8CCm8YVa5TYcP5bLar0y9oUNkrUHbkXz4CBMKl91FJ07l45RtQ_aem_KFwAVS-36dw1QbUFYrjvZQ&h=AUDeVPjNBlX2_Io0jOyhvDiNlGitfuAaQH0yCOhWK9EMcblBZCnLze0oXH8sq9VMdyWqZ6pYD2bXQPCU0v1Nsgpfvq3m97K8A4W_vBx9LUoxXhkQL5RM7H7oqc2fIWU
+
+
+
+MTvn#202654321M
+
+1- Install Docker and Docker-Compose
+apt install docker.io
+
+curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+
+chmod 700 /usr/local/bin/docker-compose
+
+
+==================== copy file từ máy local lên máy vps ============
+scp -r .\landing_page\ root@188.166.235.96:/root/my-html2
+
+==> tham số -r : cho phép copy toàn bộ folder "landing_page" lên vps và lưu tại /root/my-html2
+
+
+
+============= Lệnh tạo Nginx Proxy Manager ============
+Link: https://nginxproxymanager.com/guide/
+Mục đích:
+- Làm reverse proxy
+- Tạo kết nối HTTPs
+
+
+1- Install Docker and Docker-Compose
+
+apt install docker.io
+
+curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+
+chmod 700 /usr/local/bin/docker-compose
+
+2- Create a docker-compose.yml file similar to this
+
+services:
+  app:
+    image: 'jc21/nginx-proxy-manager:2.15.1'
+    restart: unless-stopped
+    environment:
+      TZ: "Australia/Brisbane"
+    ports:
+      - '80:80'
+      - '81:81'
+      - '443:443'
+    volumes:
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
+	  
+3- Bring up your stack by running
+	
+	docker compose up -d
+
+4- Log in to the Admin UI
+
+When your docker container is running, connect to it on port 81 for the admin interface.
+
+http://127.0.0.1:81
+
+This startup can take a minute depending on your hardware.
+

@@ -1,0 +1,40 @@
+name: Demo workflow 2
+on:
+  push:
+    branches: [master]
+jobs:
+  job_1:
+    runs-on: ubuntu-latest
+    outputs:
+      data: "${{steps.step_id.outputs.data_in}}"
+    steps:
+      - id: step_id
+        run: |
+          echo "data_in=1" >> $GITHUB_OUTPUT
+
+  job_2:
+    runs-on: ubuntu-latest
+    needs: [job_1]
+    outputs:
+      data: "${{steps.step_id.outputs.data_in}}"
+    steps:
+      - id: step_id
+        run: |
+          echo "data_in=2" >> $GITHUB_OUTPUT
+
+  job_3:
+    runs-on: ubuntu-latest
+    needs: [job_1, job_2]
+    steps:
+      - name: Gửi mail với attachment
+        uses: dawidd6/action-send-mail@v3
+        if: $(( ${{needs.job_1.outputs.data}} + ${{needs.job_2.outputs.data}} )) == 3
+        with: 
+          server_address: smtp.gmail.com
+          server_port: 587
+          username: anhkhoa070378@gmail.com
+          password: 
+          subject: " đây là tiêu đề "
+          body: "dây là nội dung"
+          to: anhkhoa070378@gmail.com
+          from: anhkhoa070378@gmail.com

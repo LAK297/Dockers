@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  deploy_html:
+    container_name: cons-html
+    ports:
+      - 8081:80
+    build: .

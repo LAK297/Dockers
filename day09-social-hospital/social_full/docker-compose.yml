@@ -1,0 +1,32 @@
+version: '3'
+
+#định nghĩa nơi build, pull image và khởi tạo container
+services:
+  node_backend:
+    container_name: cons-backend
+    ports:
+      - 8800:8800
+    build: ./API
+    #tuong tu lệnh docker build . -t img-node ; dấu chấm là vị trí của Dockerfile cùng cấp với docker-compose
+    #nếu dockerfile trong folder khác thì lệnh build: ./<tên folder>
+    #image: gecko297/getting-started-todo-app  #tuong tu lệnh docker pull gecko297/getting-started-todo-app , chỉ chạy 1 trong 2 lệnh build hoặc image
+    #environment:
+     # - MONGO_URI="mongodb://admin:admin123@mongodb:27017/shopdb?authSource=admin"
+    networks:
+      - demo_network
+
+  node_frontend:
+    container_name: cons-frontend
+    ports:
+      - 5173:80
+    build: ./frontend
+  #node_backend02:
+  #node_frontend02:
+
+networks: #tạo network sẽ gán vào containers
+ demo_network:
+    external: true #định nghĩa dòng này nếu demo_network đã có sẵn; nếu không có
+                   #thì sẽ hiểu là tạo mới
+#volumes: tạo volume sẽ gán vào containers
+  
+      

@@ -1,0 +1,21 @@
+name: demo workflow
+
+on:
+  workflow_dispatch:
+
+jobs:
+  khoi_dong_A:
+    runs-on: ubuntu-latest
+    steps:
+      - run: free -h
+
+  khoi_dong_B:
+    runs-on: ubuntu-latest
+    needs: [khoi_dong_A]
+    steps:
+      - run: pwd
+
+  khoi_dong_C:
+    runs-on: ubuntu-latest
+    steps:
+      - run: mkdir /tmp/demo && cd /tmp/demo && echo "Hello" > test.txt && ls -ahl

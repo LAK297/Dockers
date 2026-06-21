@@ -2,8 +2,8 @@ pipeline {
 	agent any
 
     enviroment {
-        IP_SERVER = 134.209.107.36
-        DEPLOY_PATH = /root/my-project/day11-CICD-Jenkins
+        IP_SERVER = '134.209.107.36'
+        DEPLOY_PATH = '/root/my-project/day11-CICD-Jenkins'
     }
 		stages {
 			stage('hello') {

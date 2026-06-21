@@ -6,10 +6,10 @@ pipeline {
         DEPLOY_PATH = '/root/my-project/day11-CICD-Jenkins'
     }
 		stages {
-			stage('Restart Container') {
+			stage ('Restart Container') {
 				steps {
 					withCredentials([
-                        sshUserPrivateKey(credentialsId:'ssh-key', keyFileVariable:'KEY', usernameVariable:'USER')
+                        sshUserPrivateKey(credentialsId:'ssh-key', keyFileVariable:'KEY', usernameVariable:'USER'),
 					]) 
 					 }
                         sh """

@@ -1,16 +1,25 @@
 pipeline {
 	agent any
+
+    enviroment {
+        IP_SERVER = 134.209.107.36
+        DEPLOY_PATH = /root/my-project/day11-CICD-Jenkins
+    }
 		stages {
 			stage('hello') {
 				steps{
 					withCredentials([
-						usernamePassword(credentialsId:'github-login', usernameVariable:'USER', passwordVariable:'PASS'),
-                        sshUserPrivateKey(credentialsId:'ssh-key', keyFileVariable:'KEY', usernameVariable:'SSHUSER'),
-						string(credentialsId:'demo-khoa-bi-mat', variable:'TOKEN')
-					]) {
-						echo " ${USER} - ${PASS} - ${KEY} - ${SSHUSER} - ${TOKEN} "
-					    }
+                        sshUserPrivateKey(credentialsId:'ssh-key', keyFileVariable:'KEY', usernameVariable:'USER')
+					]) 
 					}
+                        sh """
+                            ssh -o StrictHostKeyChecking=no -i ${KEY} ${USER}@${IP_SERVER} '
+                                cd ${DEPLOY_PATH} && git pull
+                                docker-compose down
+                                docker-compose build
+                                docker-compose up -d
+                            '
+                        """
 						    }
 				}
 		}

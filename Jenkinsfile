@@ -1,17 +1,16 @@
 pipeline {
-    agent any
-
-    stages {
-        stage('Hello') {
-            steps {
-                echo "Chao ban !"
-                echo "Pipeline dang chay..."
-            }
-        }
-        stage ('List files') {
-            steps {
-                sh "ls -la"
-            }
-        }
-    }
-}
+	agent any
+		stages {
+			stage('hello') {
+				steps{
+					withCredentials([
+						usernamePassword(credentialsId:'github-login', usernameVariable:'USER', passwordVariable:'PASS'),
+                        sshUserPrivateKey(credentialsId:'ssh-key', keyFileVariable:'KEY', usernameVariable:'SSHUSER')
+						string(credentialsId:'demo-khoa-bi-mat', variable:'TOKEN')
+					]) {
+						echo " ${USER} - ${PASS} - ${KEY} - ${SSHUSER} - ${TOKEN} "
+					    }
+					}
+						    }
+				}
+		}

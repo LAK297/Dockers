@@ -11,7 +11,7 @@ pipeline {
 					withCredentials([
                         sshUserPrivateKey(credentialsId:'ssh-key', keyFileVariable:'KEY', usernameVariable:'USER'),
 					]) 
-					 }
+					{
                         sh """
                             ssh -o StrictHostKeyChecking=no -i ${KEY} ${USER}@${IP_SERVER} '
                                 cd ${DEPLOY_PATH} && git pull
@@ -20,6 +20,8 @@ pipeline {
                                 docker-compose up -d
                             '
                         """
-						    }
-				}
+					}
+				    }
+            }
 		}
+}

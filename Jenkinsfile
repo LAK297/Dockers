@@ -14,7 +14,7 @@ pipeline {
 					{
                         sh """
                             ssh -o StrictHostKeyChecking=no -i ${KEY} ${USER}@${IP_SERVER} '
-                                cd ${DEPLOY_PATH} && git pull
+                                cd ${DEPLOY_PATH} && git checkout main && git pull
                                 docker-compose down
                                 docker-compose build
                                 docker-compose up -d

@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         IP_SERVER = '157.245.150.161'
-        DEPLOY_PATH = '/root/my-project/day11-CICD-Jenkins'
+        DEPLOY_PATH = '/root/my-project/'
     }
 		stages {
 			stage ('Restart Container') {
